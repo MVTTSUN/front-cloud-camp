@@ -24,7 +24,7 @@ export default function InputsStepTwo({
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'advantages',
-  });
+  } as { name: string });
 
   const addAdvantage = () => {
     append({ value: '' });
@@ -42,7 +42,7 @@ export default function InputsStepTwo({
           {fields.map(({ id }, index) => (
             <Advantage key={id}>
               <Input
-                {...register(`advantages.${index}.value`)}
+                {...register(`advantages.${index}.value` as const)}
                 width={300}
                 id={`field-advatages-${index + 1}`}
                 placeholder="Placeholder"
