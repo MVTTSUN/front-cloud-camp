@@ -36,7 +36,7 @@ export default function InputsStepTwo({
           {advantages.map((el, id) => (
             <Advantage key={`${id + 1}`}>
               <Input
-                // {...register('advantages', { required: 'Обязательное поле' })}
+                // {...register('advantages')}
                 width={300}
                 name={`field-advatages-${id + 1}`}
                 id={`field-advatages-${id + 1}`}
@@ -58,7 +58,7 @@ export default function InputsStepTwo({
           <Label>Checkbox group</Label>
           <InputLabel $type="checkbox">
             <CheckboxAndRadio
-              {...register('groupCheck', { required: 'Обязательное поле' })}
+              {...register('groupCheck')}
               id="field-checkbox-group-option-1"
               type="checkbox"
               value={1}
@@ -93,7 +93,7 @@ export default function InputsStepTwo({
           <Label>Radio group</Label>
           <InputLabel $type="radio">
             <CheckboxAndRadio
-              {...register('groupRadio', { required: 'Обязательное поле' })}
+              {...register('groupRadio')}
               id="field-radio-group-option-1"
               type="radio"
               value={1}
@@ -102,7 +102,7 @@ export default function InputsStepTwo({
           </InputLabel>
           <InputLabel $type="radio">
             <CheckboxAndRadio
-              {...register('groupRadio', { required: 'Обязательное поле' })}
+              {...register('groupRadio')}
               id="field-radio-group-option-2"
               type="radio"
               value={2}
@@ -111,7 +111,7 @@ export default function InputsStepTwo({
           </InputLabel>
           <InputLabel $type="radio">
             <CheckboxAndRadio
-              {...register('groupRadio', { required: 'Обязательное поле' })}
+              {...register('groupRadio')}
               id="field-radio-group-option-3"
               type="radio"
               value={3}

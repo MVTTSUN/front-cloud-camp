@@ -1,12 +1,7 @@
 import { Ref, forwardRef } from 'react';
 import { styled } from 'styled-components';
 import Tip from './Tip';
-import {
-  ChangeHandler,
-  UseFormSetValue,
-  UseFormTrigger,
-  UseFormWatch,
-} from 'react-hook-form';
+import { ChangeHandler, UseFormSetValue } from 'react-hook-form';
 import { FormDataType } from '../types';
 
 type InputSelectProps = {
@@ -14,19 +9,14 @@ type InputSelectProps = {
   name?: string;
   onChange?: ChangeHandler;
   setValue: UseFormSetValue<FormDataType>;
-  trigger: UseFormTrigger<FormDataType>;
-  watch: UseFormWatch<FormDataType>;
 };
 
 const InputSelect = forwardRef(
   (
-    { options, name, onChange, setValue, trigger, watch }: InputSelectProps,
+    { options, name, onChange, setValue }: InputSelectProps,
     ref: Ref<HTMLInputElement>
   ) => {
-    // const [testValue, setTestValue] = useState('');
-
     const changeOption = (data: string) => {
-      // setTestValue(data);
       setValue('sex', data);
     };
 

@@ -1,13 +1,7 @@
 import Input from './Input';
 import InputSelect from '../components/InputSelect';
 import { sex } from '../mocks';
-import {
-  FieldErrors,
-  UseFormRegister,
-  UseFormSetValue,
-  UseFormTrigger,
-  UseFormWatch,
-} from 'react-hook-form';
+import { FieldErrors, UseFormRegister, UseFormSetValue } from 'react-hook-form';
 import ErrorsField from './ErrorsField';
 import { FormDataType } from '../types';
 
@@ -15,22 +9,18 @@ type InputsStepOneProps = {
   register: UseFormRegister<FormDataType>;
   errors: FieldErrors<FormDataType>;
   setValue: UseFormSetValue<FormDataType>;
-  trigger: UseFormTrigger<FormDataType>;
-  watch: UseFormWatch<FormDataType>;
 };
 
 export default function InputsStepOne({
   register,
   errors,
   setValue,
-  trigger,
-  watch,
 }: InputsStepOneProps) {
   return (
     <>
       <li>
         <Input
-          {...register('nickname', { required: 'dfgfg' })}
+          {...register('nickname')}
           hasTip
           width={300}
           labelText="Nickname"
@@ -45,7 +35,7 @@ export default function InputsStepOne({
       </li>
       <li>
         <Input
-          {...register('name', { required: 'dfgfg' })}
+          {...register('name')}
           hasTip
           width={300}
           labelText="Name"
@@ -58,7 +48,7 @@ export default function InputsStepOne({
       </li>
       <li>
         <Input
-          {...register('surname', { required: 'dfgfg' })}
+          {...register('surname')}
           hasTip
           width={300}
           labelText="Sername"
@@ -70,13 +60,7 @@ export default function InputsStepOne({
         {errors.surname && <ErrorsField>{errors.surname.message}</ErrorsField>}
       </li>
       <li>
-        <InputSelect
-          trigger={trigger}
-          {...register('sex', { required: 'dfgfg' })}
-          setValue={setValue}
-          options={sex}
-          watch={watch}
-        />
+        <InputSelect {...register('sex')} setValue={setValue} options={sex} />
         {errors.sex && <ErrorsField>{errors.sex.message}</ErrorsField>}
       </li>
     </>

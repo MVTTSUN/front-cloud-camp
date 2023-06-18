@@ -24,7 +24,7 @@ export default function InputsStepThree({
     <Container>
       <Label htmlFor="field-about">About</Label>
       <Textarea
-        {...register('about', { required: 'Обязательное поле' })}
+        {...register('about')}
         onChange={textareaChangeHandler}
         value={valueTextarea}
         placeholder="Placeholder"

@@ -1,16 +1,15 @@
 import { styled } from 'styled-components';
 import Button from './Button';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import { stepResetAction } from '../store/actions';
 
 type PopupProps = {
   isSuccess: boolean;
+  closePopup: () => void;
 };
 
-export default function Popup({ isSuccess }: PopupProps) {
-  const [isClose, setIsClose] = useState(true);
+export default function Popup({ isSuccess, closePopup }: PopupProps) {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -18,17 +17,13 @@ export default function Popup({ isSuccess }: PopupProps) {
     if (!isSuccess) {
       closePopup();
     } else {
-      dispatch(stepResetAction);
+      dispatch(stepResetAction());
       navigate('/');
     }
   };
 
-  const closePopup = () => {
-    setIsClose(!isClose);
-  };
-
   return (
-    <ShadowLayer $isClose={isClose}>
+    <ShadowLayer>
       <Container>
         <TopContainer $isSuccess={isSuccess}>
           <Heading $isSuccess={isSuccess}>
@@ -50,8 +45,8 @@ export default function Popup({ isSuccess }: PopupProps) {
   );
 }
 
-const ShadowLayer = styled.div<{ $isClose: boolean }>`
-  display: ${({ $isClose }) => ($isClose ? 'none' : 'flex')};
+const ShadowLayer = styled.div`
+  display: flex;
   justify-content: center;
   align-items: center;
   position: absolute;
@@ -81,14 +76,18 @@ const Container = styled.div`
   }
 `;
 
-const TopContainer = styled.div<{ $isSuccess: boolean }>`
+const TopContainer = styled.div<{
+  $isSuccess: boolean;
+}>`
   align-self: stretch;
   display: flex;
   justify-content: ${({ $isSuccess }) =>
     $isSuccess ? 'center' : 'space-between'};
 `;
 
-const Heading = styled.h2<{ $isSuccess: boolean }>`
+const Heading = styled.h2<{
+  $isSuccess: boolean;
+}>`
   align-self: ${({ $isSuccess }) => !$isSuccess && 'flex-start'};
   margin: 0;
   font-weight: 600;
@@ -110,13 +109,17 @@ const ButtonClose = styled.button`
   border: none;
 `;
 
-const Icon = styled.span<{ $isSuccess: boolean }>`
+const Icon = styled.span<{
+  $isSuccess: boolean;
+}>`
   width: 80px;
   height: 80px;
   background: ${({ $isSuccess }) =>
     $isSuccess ? 'url(./img/success.svg)' : 'url(./img/error.svg)'};
 `;
 
-const ButtonIsSuccess = styled(Button)<{ $isSuccess: boolean }>`
+const ButtonIsSuccess = styled(Button)<{
+  $isSuccess: boolean;
+}>`
   align-self: ${({ $isSuccess }) => !$isSuccess && 'flex-end'};
 `;

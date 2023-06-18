@@ -1,8 +1,9 @@
-import { MutableRefObject, Ref, forwardRef } from 'react';
-import { IMaskMixin } from 'react-imask';
+import { Ref, forwardRef } from 'react';
+// import { IMaskMixin } from 'react-imask';
 import { styled } from 'styled-components';
 import Tip from './Tip';
 import { ChangeHandler } from 'react-hook-form';
+import { InputMask } from './InputMask';
 
 type InputProps = {
   hasTip?: boolean;
@@ -12,7 +13,6 @@ type InputProps = {
   placeholder: string;
   isDisabled?: boolean;
   type: string;
-  valueInput?: string;
   tipText?: string;
   name?: string;
   onChange?: ChangeHandler;
@@ -28,12 +28,11 @@ const Input = forwardRef(
       placeholder,
       isDisabled,
       type,
-      valueInput,
       tipText,
       name,
       onChange,
     }: InputProps,
-    ref: Ref<HTMLInputElement>
+    ref: Ref<IMask.MaskElement & HTMLInputElement>
   ) => (
     <Container>
       {labelText && (
@@ -42,14 +41,16 @@ const Input = forwardRef(
         </Label>
       )}
       {type === 'tel' ? (
-        <MaskedStyledInput
+        <InputMask
+          ref={ref}
+          name={name}
+          onChange={onChange}
           mask="+{7} 000 000-00-00"
           $width={width}
           disabled={isDisabled}
           id={id}
           placeholder={placeholder}
           type={type}
-          defaultValue={valueInput}
         />
       ) : (
         <InputStyled
@@ -61,7 +62,6 @@ const Input = forwardRef(
           id={id}
           placeholder={placeholder}
           type={type}
-          defaultValue={valueInput}
         />
       )}
       {hasTip && <Tip>{tipText}</Tip>}
@@ -91,7 +91,7 @@ const Label = styled.label<{ $disabled?: boolean }>`
   }
 `;
 
-const InputStyled = styled.input<{ $width: number }>`
+export const InputStyled = styled.input<{ $width: number }>`
   box-sizing: border-box;
   padding: 12px;
   width: ${({ $width }) => `${$width}px`};
@@ -132,19 +132,19 @@ const InputStyled = styled.input<{ $width: number }>`
   }
 `;
 
-type MaskedStyledInputProps = {
-  mask: string;
-  $width: number;
-  disabled: boolean;
-  id: string;
-  placeholder: string;
-  type: string;
-  value: string;
-  inputRef: MutableRefObject<HTMLInputElement>;
-};
+// type MaskedStyledInputProps = {
+//   mask: string;
+//   $width: number;
+//   disabled: boolean;
+//   id: string;
+//   placeholder: string;
+//   type: string;
+//   value: string;
+//   inputRef: MutableRefObject<HTMLInputElement>;
+// };
 
-const MaskedStyledInput = IMaskMixin(
-  ({ inputRef, ...props }: MaskedStyledInputProps) => (
-    <InputStyled {...props} ref={inputRef} />
-  )
-);
+// const MaskedStyledInput = IMaskMixin(
+//   ({ inputRef, ...props }: MaskedStyledInputProps) => (
+//     <InputStyled ref={inputRef} {...props} />
+//   )
+// );

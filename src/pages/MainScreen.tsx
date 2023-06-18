@@ -6,13 +6,33 @@ import Button from '../components/Button';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import { stepForwardAction } from '../store/actions';
+import {
+  FieldErrors,
+  SubmitHandler,
+  UseFormHandleSubmit,
+  UseFormRegister,
+} from 'react-hook-form';
+import { FormDataType } from '../types';
+import ErrorsField from '../components/ErrorsField';
 
-export default function MainScreen() {
-  const { name, surname, tel, email } = userInfo;
+type MainScreenProps = {
+  handleSubmit: UseFormHandleSubmit<FormDataType>;
+  register: UseFormRegister<FormDataType>;
+  errors: FieldErrors<FormDataType>;
+};
+
+export default function MainScreen({
+  handleSubmit,
+  register,
+  errors,
+}: MainScreenProps) {
+  const { name, surname } = userInfo;
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const handleClickStart = () => {
+  const onSubmit: SubmitHandler<FormDataType> = (data) => {
+    // eslint-disable-next-line no-console
+    console.log(data);
     dispatch(stepForwardAction());
     navigate('form');
   };
@@ -37,37 +57,34 @@ export default function MainScreen() {
         </Info>
       </Header>
       <Main>
-        <Form>
+        <Form onSubmit={handleSubmit(onSubmit)}>
           <FormList>
             <li>
               <Input
+                {...register('phone')}
                 width={400}
                 labelText="Номер телефона"
                 id="field-number"
                 placeholder="+7 999 999-99-99"
                 isDisabled
                 type="tel"
-                valueInput={tel}
               />
             </li>
+            {errors.phone && <ErrorsField>{errors.phone.message}</ErrorsField>}
             <li>
               <Input
+                {...register('email')}
                 width={400}
                 labelText="Email"
                 id="field-email"
                 placeholder="tim.jennings@example.com"
                 isDisabled
                 type="email"
-                valueInput={email}
               />
             </li>
+            {errors.email && <ErrorsField>{errors.email.message}</ErrorsField>}
           </FormList>
-          <Button
-            id="button-start"
-            type="button"
-            onClick={handleClickStart}
-            isForwardType
-          >
+          <Button id="button-start" isForwardType>
             Начать
           </Button>
         </Form>

@@ -9,31 +9,48 @@ import InputsStepOne from '../components/InputsStepOne';
 import InputsStepTwo from '../components/InputsStepTwo';
 import InputsStepThree from '../components/InputsStepThree';
 import Popup from '../components/Popup';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import {
+  FieldErrors,
+  SubmitHandler,
+  UseFormHandleSubmit,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormWatch,
+} from 'react-hook-form';
 import { FormDataType } from '../types';
+import { api } from '../services/api';
+import { useEffect, useState } from 'react';
 
-export default function FormScreen() {
+type FormScreenProps = {
+  handleSubmit: UseFormHandleSubmit<FormDataType>;
+  register: UseFormRegister<FormDataType>;
+  errors: FieldErrors<FormDataType>;
+  setValue: UseFormSetValue<FormDataType>;
+  watch: UseFormWatch<FormDataType>;
+};
+
+export default function FormScreen({
+  handleSubmit,
+  register,
+  errors,
+  setValue,
+  watch,
+}: FormScreenProps) {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const stepNumber = useAppSelector((state) => state.stepNumber);
+  const stepNumber = useAppSelector((state) => state.reducer.stepNumber);
+  const [formPost, { isLoading, isSuccess }] = api.useFormPostMutation();
+  const textButtonSend = isLoading ? 'Отправка...' : 'Отправить';
+  const [sendIsSuccess, setSendIsSuccess] = useState(isSuccess);
+  const [isOpenPopup, setIsOpenPopup] = useState(false);
 
-  const {
-    handleSubmit,
-    register,
-    formState: { errors },
-    setValue,
-    trigger,
-    watch,
-  } = useForm<FormDataType>({
-    // defaultValues: {
-    //   nickname: '',
-    //   name: '',
-    //   surname: '',
-    //   sex: '',
-    //   advantage: '',
-    //   about: '',
-    // },
-  });
+  useEffect(() => {
+    setSendIsSuccess(isSuccess);
+  }, [isSuccess]);
+
+  const handleClosePopup = () => {
+    setIsOpenPopup(false);
+  };
 
   const handleClickBack = () => {
     dispatch(stepBackAction());
@@ -42,17 +59,18 @@ export default function FormScreen() {
     }
   };
 
-  const handleClickForward = () => {
+  const onSubmit: SubmitHandler<FormDataType> = async (data) => {
     if (stepNumber < 3) {
       dispatch(stepForwardAction());
     }
+
+    if (stepNumber === 3) {
+      await formPost({ data, body: data } as unknown as FormDataType);
+      setIsOpenPopup(true);
+    }
+
     // eslint-disable-next-line no-console
     console.log(watch());
-  };
-
-  const onSubmit: SubmitHandler<FormDataType> = (data) => {
-    // eslint-disable-next-line no-console
-    // console.log(isValid);
   };
 
   return (
@@ -66,8 +84,6 @@ export default function FormScreen() {
                 register={register}
                 errors={errors}
                 setValue={setValue}
-                trigger={trigger}
-                watch={watch}
               />
             )}
             {stepNumber === 2 && (
@@ -83,15 +99,16 @@ export default function FormScreen() {
             </Button>
             <Button
               id={stepNumber === 3 ? 'button-send' : 'button-next'}
-              onClick={handleClickForward}
               isForwardType
             >
-              {stepNumber === 3 ? 'Отправить' : 'Далее'}
+              {stepNumber === 3 ? textButtonSend : 'Далее'}
             </Button>
           </ButtonContainer>
         </Form>
       </Container>
-      <Popup isSuccess />
+      {isOpenPopup && (
+        <Popup closePopup={handleClosePopup} isSuccess={sendIsSuccess} />
+      )}
     </>
   );
 }

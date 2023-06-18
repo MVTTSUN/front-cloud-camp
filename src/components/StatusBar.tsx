@@ -2,7 +2,7 @@ import { css, styled } from 'styled-components';
 import { useAppSelector } from '../hooks/useAppSelector';
 
 export default function StatusBar() {
-  const stepNumber = useAppSelector((state) => state.stepNumber);
+  const stepNumber = useAppSelector((state) => state.reducer.stepNumber);
 
   return (
     <Container>

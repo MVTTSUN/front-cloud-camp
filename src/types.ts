@@ -6,13 +6,15 @@ export type UserLinkType = {
 };
 
 export type FormDataType = {
+  phone: string;
+  email: string;
   nickname: string;
   name: string;
   surname: string;
   sex: string;
   advantages: string[];
   about: string;
-  groupCheck: string[];
+  groupCheck: number[];
   groupRadio: string;
 };
 

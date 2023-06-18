@@ -16,7 +16,7 @@ export const userLinks = [
 export const userInfo = {
   name: 'Матвей',
   surname: 'Рябцун',
-  tel: '+79625770212',
+  phone: '+79625770212',
   email: 'ryabtzun2011@yandex.ru',
 };
 
