@@ -42,7 +42,7 @@ export default function InputsStepTwo({
           {fields.map(({ id }, index) => (
             <Advantage key={id}>
               <Input
-                {...register(`advantages.${index}.value` as const)}
+                {...register(`advantages.${index}.value` as never)}
                 width={300}
                 id={`field-advatages-${index + 1}`}
                 placeholder="Placeholder"
