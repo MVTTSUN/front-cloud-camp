@@ -14,6 +14,7 @@ import {
   SubmitHandler,
   UseFormHandleSubmit,
   UseFormRegister,
+  UseFormReset,
   UseFormSetValue,
   UseFormWatch,
 } from 'react-hook-form';
@@ -26,6 +27,7 @@ type FormScreenProps = {
   register: UseFormRegister<FormDataType>;
   errors: FieldErrors<FormDataType>;
   setValue: UseFormSetValue<FormDataType>;
+  reset: UseFormReset<FormDataType>;
   watch: UseFormWatch<FormDataType>;
 };
 
@@ -34,6 +36,7 @@ export default function FormScreen({
   register,
   errors,
   setValue,
+  reset,
   watch,
 }: FormScreenProps) {
   const navigate = useNavigate();
@@ -66,6 +69,7 @@ export default function FormScreen({
 
     if (stepNumber === 3) {
       await formPost({ data, body: data } as unknown as FormDataType);
+      reset({}, { keepErrors: true });
       setIsOpenPopup(true);
     }
 
@@ -87,7 +91,11 @@ export default function FormScreen({
               />
             )}
             {stepNumber === 2 && (
-              <InputsStepTwo register={register} errors={errors} />
+              <InputsStepTwo
+                register={register}
+                errors={errors}
+                setValue={setValue}
+              />
             )}
             {stepNumber === 3 && (
               <InputsStepThree register={register} errors={errors} />

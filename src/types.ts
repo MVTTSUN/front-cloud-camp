@@ -13,9 +13,9 @@ export type FormDataType = {
   surname: string;
   sex: string;
   advantages: string[];
-  about: string;
-  groupCheck: number[];
+  groupCheck: string[];
   groupRadio: string;
+  about: string;
 };
 
 export type State = ReturnType<typeof store.getState>;

@@ -2,18 +2,20 @@ import { css, styled } from 'styled-components';
 import Input from './Input';
 import Button from './Button';
 import { SyntheticEvent, useState } from 'react';
-import { FieldErrors, UseFormRegister } from 'react-hook-form';
+import { FieldErrors, UseFormRegister, UseFormSetValue } from 'react-hook-form';
 import { FormDataType } from '../types';
 import ErrorsField from './ErrorsField';
 
 type InputsStepTwoProps = {
   register: UseFormRegister<FormDataType>;
   errors: FieldErrors<FormDataType>;
+  setValue: UseFormSetValue<FormDataType>;
 };
 
 export default function InputsStepTwo({
   register,
   errors,
+  setValue,
 }: InputsStepTwoProps) {
   const [advantages, setAdvantages] = useState<string[]>([]);
   const copyAdvantages = [...advantages];
@@ -31,12 +33,12 @@ export default function InputsStepTwo({
   return (
     <>
       <li>
-        <FieldsetInputs>
-          <Label>Advantages</Label>
-          {advantages.map((el, id) => (
+        <FieldsetInputsAdvantages>
+          <LabelAdvantages>Advantages</LabelAdvantages>
+          {advantages.map((_, id) => (
             <Advantage key={`${id + 1}`}>
               <Input
-                // {...register('advantages')}
+                {...register('advantages')}
                 width={300}
                 name={`field-advatages-${id + 1}`}
                 id={`field-advatages-${id + 1}`}
@@ -51,11 +53,11 @@ export default function InputsStepTwo({
             </Advantage>
           ))}
           <ButtonAdd id="button-add" type="button" onClick={addAdvantage} />
-        </FieldsetInputs>
+        </FieldsetInputsAdvantages>
       </li>
       <li>
-        <FieldsetInputs>
-          <Label>Checkbox group</Label>
+        <FieldsetInputsOther>
+          <LabelOther>Checkbox group</LabelOther>
           <InputLabel $type="checkbox">
             <CheckboxAndRadio
               {...register('groupCheck')}
@@ -86,11 +88,11 @@ export default function InputsStepTwo({
           {errors.groupCheck && (
             <ErrorsField>{errors.groupCheck.message}</ErrorsField>
           )}
-        </FieldsetInputs>
+        </FieldsetInputsOther>
       </li>
       <li>
-        <FieldsetInputs>
-          <Label>Radio group</Label>
+        <FieldsetInputsOther>
+          <LabelOther>Radio group</LabelOther>
           <InputLabel $type="radio">
             <CheckboxAndRadio
               {...register('groupRadio')}
@@ -121,13 +123,13 @@ export default function InputsStepTwo({
           {errors.groupRadio && (
             <ErrorsField>{errors.groupRadio.message}</ErrorsField>
           )}
-        </FieldsetInputs>
+        </FieldsetInputsOther>
       </li>
     </>
   );
 }
 
-const FieldsetInputs = styled.fieldset`
+const FieldsetInputsAdvantages = styled.fieldset`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -137,7 +139,11 @@ const FieldsetInputs = styled.fieldset`
   padding: 0;
 `;
 
-const Label = styled.legend`
+const FieldsetInputsOther = styled(FieldsetInputsAdvantages)`
+  gap: 0;
+`;
+
+const LabelAdvantages = styled.legend`
   margin-bottom: 8px;
   font-weight: 400;
   font-size: 14px;
@@ -147,6 +153,10 @@ const Label = styled.legend`
   @media screen and (max-width: 540px) {
     font-size: 12px;
   }
+`;
+
+const LabelOther = styled(LabelAdvantages)`
+  margin-bottom: 0;
 `;
 
 const ButtonAdd = styled(Button)`

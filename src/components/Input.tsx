@@ -93,7 +93,7 @@ const Label = styled.label<{ $disabled?: boolean }>`
 
 export const InputStyled = styled.input<{ $width: number }>`
   box-sizing: border-box;
-  padding: 12px;
+  padding: 11px;
   width: ${({ $width }) => `${$width}px`};
   background: #fff;
   border: 1px solid rgba(0, 0, 0, 0.16);
