@@ -1,33 +1,37 @@
 import { css, styled } from 'styled-components';
-import Input from './Input';
+import { Input } from './Input';
 import Button from './Button';
-import { SyntheticEvent, useState } from 'react';
-import { FieldErrors, UseFormRegister, UseFormSetValue } from 'react-hook-form';
+import {
+  Control,
+  FieldErrors,
+  UseFormRegister,
+  useFieldArray,
+} from 'react-hook-form';
 import { FormDataType } from '../types';
 import ErrorsField from './ErrorsField';
 
 type InputsStepTwoProps = {
   register: UseFormRegister<FormDataType>;
   errors: FieldErrors<FormDataType>;
-  setValue: UseFormSetValue<FormDataType>;
+  control: Control<FormDataType>;
 };
 
 export default function InputsStepTwo({
   register,
   errors,
-  setValue,
+  control,
 }: InputsStepTwoProps) {
-  const [advantages, setAdvantages] = useState<string[]>([]);
-  const copyAdvantages = [...advantages];
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'advantages',
+  });
 
   const addAdvantage = () => {
-    copyAdvantages.push('');
-    setAdvantages(copyAdvantages);
+    append({ value: '' });
   };
 
-  const deleteAdvantage = (evt: SyntheticEvent) => {
-    copyAdvantages.splice(+evt.currentTarget.id.split('-')[2] - 1, 1);
-    setAdvantages(copyAdvantages);
+  const deleteAdvantage = (index: number) => () => {
+    remove(index);
   };
 
   return (
@@ -35,21 +39,23 @@ export default function InputsStepTwo({
       <li>
         <FieldsetInputsAdvantages>
           <LabelAdvantages>Advantages</LabelAdvantages>
-          {advantages.map((_, id) => (
-            <Advantage key={`${id + 1}`}>
+          {fields.map(({ id }, index) => (
+            <Advantage key={id}>
               <Input
-                {...register('advantages')}
+                {...register(`advantages.${index}.value`)}
                 width={300}
-                name={`field-advatages-${id + 1}`}
-                id={`field-advatages-${id + 1}`}
+                id={`field-advatages-${index + 1}`}
                 placeholder="Placeholder"
                 type="text"
               />
               <ButtonDelete
-                onClick={deleteAdvantage}
+                onClick={deleteAdvantage(index)}
                 type="button"
-                id={`button-remove-${id + 1}`}
+                id={`button-remove-${index + 1}`}
               />
+              {errors.advantages?.root && (
+                <ErrorsField>{errors.advantages.root.message}</ErrorsField>
+              )}
             </Advantage>
           ))}
           <ButtonAdd id="button-add" type="button" onClick={addAdvantage} />

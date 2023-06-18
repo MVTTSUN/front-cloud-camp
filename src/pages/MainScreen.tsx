@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import UserLink from '../components/UserLink';
 import { userInfo, userLinks } from '../mocks';
-import Input from '../components/Input';
+import { Input } from '../components/Input';
 import Button from '../components/Button';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../hooks/useAppDispatch';
@@ -30,9 +30,7 @@ export default function MainScreen({
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const onSubmit: SubmitHandler<FormDataType> = (data) => {
-    // eslint-disable-next-line no-console
-    console.log(data);
+  const onSubmit: SubmitHandler<FormDataType> = () => {
     dispatch(stepForwardAction());
     navigate('form');
   };

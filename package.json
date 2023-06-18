@@ -27,7 +27,8 @@
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
     "plugins": [
-      "@typescript-eslint"
+      "@typescript-eslint",
+      "react-hook-form"
     ],
     "extends": [
       "react-app",
@@ -39,11 +40,15 @@
       ]
     },
     "rules": {
-      "@typescript-eslint/no-misused-promises": [2, {
-        "checksVoidReturn": {
-          "attributes": false
+      "react-hook-form/destructuring-formstate": "error",
+      "@typescript-eslint/no-misused-promises": [
+        2,
+        {
+          "checksVoidReturn": {
+            "attributes": false
+          }
         }
-      }]
+      ]
     }
   },
   "browserslist": {
@@ -67,13 +72,13 @@
     "@types/node": "^20.3.1",
     "@types/react": "^18.2.12",
     "@types/react-dom": "^18.2.5",
-    "@types/react-input-mask": "^3.0.2",
     "@types/react-redux": "^7.1.25",
     "@types/styled-components": "^5.1.26",
     "@typescript-eslint/eslint-plugin": "^5.59.11",
     "@typescript-eslint/parser": "^5.59.11",
     "eslint": "^8.42.0",
     "eslint-config-htmlacademy": "^9.1.1",
+    "eslint-plugin-react-hook-form": "^0.3.0",
     "typescript": "^4.9.5"
   }
 }

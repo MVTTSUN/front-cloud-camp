@@ -1,5 +1,4 @@
 import { Ref, forwardRef } from 'react';
-// import { IMaskMixin } from 'react-imask';
 import { styled } from 'styled-components';
 import Tip from './Tip';
 import { ChangeHandler } from 'react-hook-form';
@@ -18,7 +17,7 @@ type InputProps = {
   onChange?: ChangeHandler;
 };
 
-const Input = forwardRef(
+export const Input = forwardRef(
   (
     {
       hasTip,
@@ -70,7 +69,6 @@ const Input = forwardRef(
 );
 
 Input.displayName = 'Input';
-export default Input;
 
 const Container = styled.div`
   display: flex;
@@ -131,20 +129,3 @@ export const InputStyled = styled.input<{ $width: number }>`
     }
   }
 `;
-
-// type MaskedStyledInputProps = {
-//   mask: string;
-//   $width: number;
-//   disabled: boolean;
-//   id: string;
-//   placeholder: string;
-//   type: string;
-//   value: string;
-//   inputRef: MutableRefObject<HTMLInputElement>;
-// };
-
-// const MaskedStyledInput = IMaskMixin(
-//   ({ inputRef, ...props }: MaskedStyledInputProps) => (
-//     <InputStyled ref={inputRef} {...props} />
-//   )
-// );

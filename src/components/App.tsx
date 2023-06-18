@@ -21,6 +21,7 @@ export default function App() {
     setValue,
     reset,
     watch,
+    control,
   } = useForm<FormDataType>({
     defaultValues: { phone, email },
     resolver: yupResolver(currentSchema) as unknown as Resolver<FormDataType>,
@@ -49,6 +50,7 @@ export default function App() {
                 errors={errors}
                 setValue={setValue}
                 reset={reset}
+                control={control}
                 watch={watch}
               />
             ) : (

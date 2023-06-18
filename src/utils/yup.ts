@@ -1,4 +1,4 @@
-import { object, string } from 'yup';
+import { array, object, string } from 'yup';
 
 export const schema = [
   object({
@@ -23,8 +23,10 @@ export const schema = [
     sex: string().required('Обязательное поле'),
   }),
   object({
-    // advantages: string().required('Обязательное поле'),
-    groupCheck: string().required('Обязательное поле'),
+    advantages: array().of(string()).required('Обязательное поле'),
+    groupCheck: array()
+      .of(string().required('Обязательное поле'))
+      .required('Обязательное поле'),
     groupRadio: string().required('Обязательное поле'),
   }),
   object({

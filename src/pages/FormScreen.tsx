@@ -10,6 +10,7 @@ import InputsStepTwo from '../components/InputsStepTwo';
 import InputsStepThree from '../components/InputsStepThree';
 import Popup from '../components/Popup';
 import {
+  Control,
   FieldErrors,
   SubmitHandler,
   UseFormHandleSubmit,
@@ -28,6 +29,7 @@ type FormScreenProps = {
   errors: FieldErrors<FormDataType>;
   setValue: UseFormSetValue<FormDataType>;
   reset: UseFormReset<FormDataType>;
+  control: Control<FormDataType>;
   watch: UseFormWatch<FormDataType>;
 };
 
@@ -37,6 +39,7 @@ export default function FormScreen({
   errors,
   setValue,
   reset,
+  control,
   watch,
 }: FormScreenProps) {
   const navigate = useNavigate();
@@ -57,6 +60,7 @@ export default function FormScreen({
 
   const handleClickBack = () => {
     dispatch(stepBackAction());
+
     if (!stepNumber) {
       navigate(-1);
     }
@@ -94,7 +98,7 @@ export default function FormScreen({
               <InputsStepTwo
                 register={register}
                 errors={errors}
-                setValue={setValue}
+                control={control}
               />
             )}
             {stepNumber === 3 && (

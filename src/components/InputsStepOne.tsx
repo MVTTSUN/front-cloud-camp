@@ -1,5 +1,5 @@
-import Input from './Input';
-import InputSelect from '../components/InputSelect';
+import { Input } from './Input';
+import { InputSelect } from '../components/InputSelect';
 import { sex } from '../mocks';
 import { FieldErrors, UseFormRegister, UseFormSetValue } from 'react-hook-form';
 import ErrorsField from './ErrorsField';

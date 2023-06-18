@@ -11,7 +11,7 @@ type InputSelectProps = {
   setValue: UseFormSetValue<FormDataType>;
 };
 
-const InputSelect = forwardRef(
+export const InputSelect = forwardRef(
   (
     { options, name, onChange, setValue }: InputSelectProps,
     ref: Ref<HTMLInputElement>
@@ -49,7 +49,6 @@ const InputSelect = forwardRef(
 );
 
 InputSelect.displayName = 'InputSelect';
-export default InputSelect;
 
 const Label = styled.label`
   align-self: flex-start;
