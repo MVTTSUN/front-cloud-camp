@@ -1,6 +1,6 @@
-import { array, boolean, object, string } from 'yup';
+import { array, number, object, string } from 'yup';
 
-const test = {
+const advantageSchema = {
   value: string().required('Обязательное поле'),
 };
 
@@ -28,9 +28,9 @@ export const schema = [
   }),
   object({
     advantages: array()
-      .of(object(test).required('Обязательное поле'))
+      .of(object(advantageSchema).required('Обязательное поле'))
       .required('Обязательное поле'),
-    groupCheck: boolean().oneOf([true], 'Хотя бы один должен быть отмечен'),
+    groupCheck: array().of(number()).min(1, 'Обязательное поле'),
     groupRadio: string().required('Обязательное поле'),
   }),
   object({

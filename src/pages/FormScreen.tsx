@@ -17,7 +17,6 @@ import {
   UseFormRegister,
   UseFormReset,
   UseFormSetValue,
-  UseFormWatch,
 } from 'react-hook-form';
 import { FormDataType } from '../types';
 import { api } from '../services/api';
@@ -30,7 +29,6 @@ type FormScreenProps = {
   setValue: UseFormSetValue<FormDataType>;
   reset: UseFormReset<FormDataType>;
   control: Control<FormDataType>;
-  watch: UseFormWatch<FormDataType>;
 };
 
 export default function FormScreen({
@@ -40,7 +38,6 @@ export default function FormScreen({
   setValue,
   reset,
   control,
-  watch,
 }: FormScreenProps) {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();

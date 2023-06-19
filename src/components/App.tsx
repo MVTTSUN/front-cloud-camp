@@ -20,7 +20,6 @@ export default function App() {
     formState: { errors },
     setValue,
     reset,
-    watch,
     control,
   } = useForm<FormDataType>({
     defaultValues: { phone, email },
@@ -51,7 +50,6 @@ export default function App() {
                 setValue={setValue}
                 reset={reset}
                 control={control}
-                watch={watch}
               />
             ) : (
               <Navigate to="/" />
