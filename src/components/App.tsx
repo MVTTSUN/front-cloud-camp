@@ -22,7 +22,7 @@ export default function App() {
     reset,
     control,
   } = useForm<FormDataType>({
-    defaultValues: { phone, email },
+    defaultValues: { phone, email, groupCheck: [], advantages: [] },
     resolver: yupResolver(currentSchema) as unknown as Resolver<FormDataType>,
   });
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { css, styled } from 'styled-components';
 import { Input } from './Input';
 import Button from './Button';
@@ -55,6 +56,9 @@ export default function InputsStepTwo({
               />
             </Advantage>
           ))}
+          {errors.advantages && (
+            <ErrorsField>{errors.advantages.message}</ErrorsField>
+          )}
           <ButtonAdd id="button-add" type="button" onClick={addAdvantage} />
         </FieldsetInputsAdvantages>
       </li>

@@ -1,41 +1,49 @@
 import { array, number, object, string } from 'yup';
+import { errorMessages } from './const';
 
-const advantageSchema = {
-  value: string().required('Обязательное поле'),
-};
+const {
+  required,
+  emailValid,
+  maxLength,
+  maxLengthTextarea,
+  onlyLetters,
+  onlyLettersAndNumbers,
+} = errorMessages;
 
 export const schema = [
   object({
-    phone: string().required('Обязательное поле'),
+    phone: string().required(required),
     email: string()
-      .email('Невалидный адрес электронной почты')
-      .matches(/@[^.]*\./, 'Невалидный адрес электронной почты'),
+      .email(emailValid)
+      .matches(/@[^.]*\./, emailValid),
   }),
   object({
     nickname: string()
-      .required('Обязательное поле')
-      .max(30, 'Максимальная длина 30 символов')
-      .matches(/^[a-zA-Zа-яА-Я0-9]+$/, 'Могут быть только буквы и цифры'),
+      .required(required)
+      .max(30, maxLength)
+      .matches(/^[a-zA-Zа-яА-Я0-9]+$/, onlyLettersAndNumbers),
     name: string()
-      .required('Обязательное поле')
-      .max(50, 'Максимальная длина 30 символов')
-      .matches(/^[a-zA-Zа-яА-Я]+$/, 'Могут быть только буквы'),
+      .required(required)
+      .max(50, maxLength)
+      .matches(/^[a-zA-Zа-яА-Я]+$/, onlyLetters),
     surname: string()
-      .required('Обязательное поле')
-      .max(50, 'Максимальная длина 30 символов')
-      .matches(/^[a-zA-Zа-яА-Я]+$/, 'Могут быть только буквы'),
-    sex: string().required('Обязательное поле'),
+      .required(required)
+      .max(50, maxLength)
+      .matches(/^[a-zA-Zа-яА-Я]+$/, onlyLetters),
+    sex: string().required(required),
   }),
   object({
     advantages: array()
-      .of(object(advantageSchema).required('Обязательное поле'))
-      .required('Обязательное поле'),
-    groupCheck: array().of(number()).min(1, 'Обязательное поле'),
-    groupRadio: string().required('Обязательное поле'),
+      .of(
+        object({
+          value: string().required(required),
+        })
+      )
+      .min(1, required),
+    groupCheck: array().of(number()).min(1, required),
+    groupRadio: string().required(required),
   }),
   object({
-    about: string()
-      .required('Обязательное поле')
-      .max(200, 'Максимальная длина 200 символов'),
+    about: string().required(required).max(200, maxLengthTextarea),
   }),
 ];
