@@ -1,4 +1,8 @@
-import { array, object, string } from 'yup';
+import { array, boolean, object, string } from 'yup';
+
+const test = {
+  value: string().required('Обязательное поле'),
+};
 
 export const schema = [
   object({
@@ -23,10 +27,10 @@ export const schema = [
     sex: string().required('Обязательное поле'),
   }),
   object({
-    advantages: array().of(string()).required('Обязательное поле'),
-    groupCheck: array()
-      .of(string().required('Обязательное поле'))
+    advantages: array()
+      .of(object(test).required('Обязательное поле'))
       .required('Обязательное поле'),
+    groupCheck: boolean().oneOf([true], 'Хотя бы один должен быть отмечен'),
     groupRadio: string().required('Обязательное поле'),
   }),
   object({

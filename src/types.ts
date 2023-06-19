@@ -13,7 +13,7 @@ export type FormDataType = {
   surname: string;
   sex: string;
   advantages: string[];
-  groupCheck: string[];
+  groupCheck: boolean[];
   groupRadio: string;
   about: string;
 };

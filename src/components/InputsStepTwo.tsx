@@ -53,9 +53,6 @@ export default function InputsStepTwo({
                 type="button"
                 id={`button-remove-${index + 1}`}
               />
-              {errors.advantages?.root && (
-                <ErrorsField>{errors.advantages.root.message}</ErrorsField>
-              )}
             </Advantage>
           ))}
           <ButtonAdd id="button-add" type="button" onClick={addAdvantage} />

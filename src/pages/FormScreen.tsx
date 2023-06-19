@@ -76,9 +76,6 @@ export default function FormScreen({
       reset({}, { keepErrors: true });
       setIsOpenPopup(true);
     }
-
-    // eslint-disable-next-line no-console
-    console.log(watch());
   };
 
   return (
