@@ -21,6 +21,7 @@ import {
 import { FormDataType } from '../types';
 import { api } from '../services/api';
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 type FormScreenProps = {
   handleSubmit: UseFormHandleSubmit<FormDataType>;
@@ -112,9 +113,11 @@ export default function FormScreen({
           </ButtonContainer>
         </Form>
       </Container>
-      {isOpenPopup && (
-        <Popup closePopup={handleClosePopup} isSuccess={sendIsSuccess} />
-      )}
+      {isOpenPopup &&
+        createPortal(
+          <Popup closePopup={handleClosePopup} isSuccess={sendIsSuccess} />,
+          document.body
+        )}
     </>
   );
 }

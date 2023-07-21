@@ -45,14 +45,14 @@ export default function InputsStepTwo({
               <Input
                 {...register(`advantages.${index}.value` as never)}
                 width={300}
-                id={`field-advatages-${index + 1}`}
+                id={`field-advatages-${index}`}
                 placeholder="Placeholder"
                 type="text"
               />
               <ButtonDelete
                 onClick={deleteAdvantage(index)}
                 type="button"
-                id={`button-remove-${index + 1}`}
+                id={`button-remove-${index}`}
               />
             </Advantage>
           ))}

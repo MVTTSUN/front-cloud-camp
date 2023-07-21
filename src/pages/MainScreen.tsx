@@ -5,7 +5,7 @@ import { Input } from '../components/Input';
 import Button from '../components/Button';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../hooks/useAppDispatch';
-import { stepForwardAction } from '../store/actions';
+import { stepForwardAction, stepResetAction } from '../store/actions';
 import {
   FieldErrors,
   SubmitHandler,
@@ -14,6 +14,7 @@ import {
 } from 'react-hook-form';
 import { FormDataType } from '../types';
 import ErrorsField from '../components/ErrorsField';
+import { useAppSelector } from '../hooks/useAppSelector';
 
 type MainScreenProps = {
   handleSubmit: UseFormHandleSubmit<FormDataType>;
@@ -29,6 +30,11 @@ export default function MainScreen({
   const { name, surname } = userInfo;
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const stepNumber = useAppSelector((state) => state.reducer.stepNumber);
+
+  if (stepNumber >= 3) {
+    dispatch(stepResetAction());
+  }
 
   const onSubmit: SubmitHandler<FormDataType> = () => {
     dispatch(stepForwardAction());
